@@ -19,7 +19,7 @@ app.add_middleware(
     allow_origins=[
         "http://localhost:3000",
         "http://localhost:3001",
-        "https://lily-brain.onrender.com",
+        "https://lily-brain-fxej.vercel.app/",
     ],
     allow_methods=["*"],
     allow_headers=["*"],
