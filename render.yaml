@@ -1,0 +1,29 @@
+services:
+  # ── FastAPI backend ────────────────────────────────────────────────────────
+  - type: web
+    name: lily-brain-api
+    runtime: python
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    plan: free
+    envVars:
+      - key: OPENAI_API_KEY
+        sync: false          # fill in Render dashboard — never commit secrets
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_KEY
+        sync: false
+    healthCheckPath: /health
+
+  # ── Next.js frontend ───────────────────────────────────────────────────────
+  - type: web
+    name: lily-brain-frontend
+    runtime: node
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    plan: free
+    envVars:
+      - key: FASTAPI_URL
+        sync: false          # set to https://lily-brain-api.onrender.com after backend deploys
